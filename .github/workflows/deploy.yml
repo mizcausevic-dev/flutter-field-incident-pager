@@ -1,0 +1,48 @@
+name: Deploy to pager.kineticgain.com
+
+# Static HTML -> Hostinger FTP at /pager/
+# workflow_dispatch-only: subdomain not yet in Hostinger DNS.
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy-flutter-field-incident-pager
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: FTP-sync to pager.kineticgain.com
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Verify build inputs
+        run: |
+          test -f index.html || (echo "FAIL: index.html missing" && exit 1)
+          grep -q "Flutter Field Incident Pager" index.html || (echo "FAIL: index.html missing title" && exit 1)
+          echo "OK: verified"
+
+      - name: FTP Deploy
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: ./
+          server-dir: /pager/
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/.github/**
+            **/node_modules/**
+            README.md
+            CHANGELOG.md
+            LICENSE
+            SECURITY.md
+            CODE_OF_CONDUCT.md
+            .gitignore
