@@ -2,7 +2,7 @@
 
 Flutter mobile operator surface for on-call incident acknowledgement, escalation lane routing, field-incident handoff evidence, and SLO blast-radius posture.
 
-- **Live:** [`https://pager.kineticgain.com/`](https://pager.kineticgain.com/) _(pending Hostinger subdomain provisioning)_
+- **Live:** [`https://pager.kineticgain.com/`](https://pager.kineticgain.com/)
 - **Lane:** Polyglot · Flutter Mobile · Flutter signal
 - **Repo:** [`mizcausevic-dev/flutter-field-incident-pager`](https://github.com/mizcausevic-dev/flutter-field-incident-pager)
 
